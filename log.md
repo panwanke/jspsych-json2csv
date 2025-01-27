@@ -41,3 +41,12 @@ function JSON2CSV(objArray) {
 2. 导出 csv 文件，与 json 文件同名, 路径相同。
 3. 合并 转换csv 和下载 按钮
 
+
+
+JSON2CSV(e.target.result) 中的 e.target.result 为字符串，例如 "[{\"success\":true,\"rt\":5892,\"trial_type\":\"fullscreen\",..."。需要先将其转换为 元素为 object 的 list 才能输入到 JSON2CSV 中。
+
+确保输入处理逻辑是一部分。更重要的是需要在 const csvData = JSON2CSV(e.target.result); 之前对 e.target.result 进行类型判断，并进行处理，如果其是字符串需要先转换为包含对象的列表。
+
+
+注意，let tmp_string = e.target.result 需要 JSON.parse 两次。
+

@@ -64,7 +64,7 @@
 
   <script>
     function JSON2CSV(objArray) {
-      const array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
+      const array = typeof objArray == 'string' ? JSON.parse(objArray) : objArray;
       let line = "";
       let result = "";
       const columns = [];
@@ -160,7 +160,9 @@
           const promise = new Promise((resolve, reject) => {
             reader.onload = (e) => {
               try {
-                const csvData = JSON2CSV(e.target.result);
+                let tmp_string = e.target.result
+                let parsed_tmp = JSON.parse(tmp_string)
+                const csvData = JSON2CSV(parsed_tmp);
                 const blob = new Blob([csvData], { type: 'text/csv' });
                 const url = URL.createObjectURL(blob);
                 
