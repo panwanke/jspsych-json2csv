@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON转CSV工具</title>
+  <title>JSON to CSV Tool</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -47,19 +47,19 @@
   </style>
 </head>
 <body>
-  <h1>JSON转CSV工具</h1>
+  <h1>JSON to CSV Tool</h1>
   
   <div class="drop-zone">
-    将JSON文件拖放到此处，或点击选择文件
+    Drag and drop JSON files here, or click to select files
     <input type="file" id="file-input" style="display: none;" multiple>
   </div>
 
   <div id="file-list" class="file-list">
-    <h3>已选择文件：</h3>
+    <h3>Selected files:</h3>
     <ul id="selected-files"></ul>
   </div>
 
-  <button id="process-btn">转换并下载CSV</button>
+  <button id="process-btn">Convert and Download CSV</button>
   <div id="status" class="status"></div>
 
   <script>
@@ -103,7 +103,7 @@
     const statusDiv = document.getElementById('status');
     let files = [];
 
-    // 处理文件拖放
+    // Handle file drag and drop
     dropZone.addEventListener('dragover', (e) => {
       e.preventDefault();
       dropZone.classList.add('dragover');
@@ -127,7 +127,7 @@
       handleFiles(e.target.files);
     });
 
-    // 更新文件列表显示
+    // Update file list display
     function updateFileList() {
       fileList.innerHTML = '';
       files.forEach((file, index) => {
@@ -137,21 +137,21 @@
       });
     }
 
-    // 处理多个文件
+    // Handle multiple files
     function handleFiles(newFiles) {
       files = Array.from(newFiles);
       updateFileList();
-      statusDiv.textContent = `已选择 ${files.length} 个文件`;
+      statusDiv.textContent = `Selected ${files.length} file(s)`;
     }
 
-    // 处理转换和下载
+    // Handle conversion and download
     processBtn.addEventListener('click', async () => {
       if (files.length === 0) {
-        statusDiv.textContent = '请先选择文件';
+        statusDiv.textContent = 'Please select files first';
         return;
       }
 
-      statusDiv.textContent = '开始处理...';
+      statusDiv.textContent = 'Processing...';
       processBtn.disabled = true;
 
       try {
@@ -166,7 +166,7 @@
                 const blob = new Blob([csvData], { type: 'text/csv' });
                 const url = URL.createObjectURL(blob);
                 
-                // 创建下载链接
+                // Create download link
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = file.name.replace(/\.json$/i, '.csv');
@@ -187,10 +187,10 @@
           await promise;
         }
 
-        statusDiv.textContent = `成功处理 ${files.length} 个文件`;
+        statusDiv.textContent = `Successfully processed ${files.length} file(s)`;
       } catch (error) {
         console.error(error);
-        statusDiv.textContent = `处理失败: ${error.message}`;
+        statusDiv.textContent = `Processing failed: ${error.message}`;
       } finally {
         processBtn.disabled = false;
       }
